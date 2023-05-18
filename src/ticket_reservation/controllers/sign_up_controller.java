@@ -38,11 +38,11 @@ public class sign_up_controller {
             preparedStmt.setString (4, model.GetNama());
             preparedStmt.setInt    (5, model.GetNoHp());
             preparedStmt.execute();
-        connection.close();
+            connection.close();
+            view.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(sign_up_controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         
+        }         
     }
     
 }

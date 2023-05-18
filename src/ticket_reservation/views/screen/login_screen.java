@@ -4,12 +4,16 @@
  */
 package ticket_reservation.views.screen;
 
+import ticket_reservation.controllers.login_controller;
+import ticket_reservation.models.user;
+
 /**
  *
  * @author Lenovo
  */
 public class login_screen extends javax.swing.JFrame {
-
+    user model = new user();
+    login_controller controller = new login_controller(model,this);
     /**
      * Creates new form login_screen
      */
@@ -42,6 +46,11 @@ public class login_screen extends javax.swing.JFrame {
         jLabel3.setText("Password :");
 
         loginButton.setText("Login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,6 +97,10 @@ public class login_screen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        loginButtonAction(inputUsernameLogin.getText(),inputPasswordLogin.getText());
+    }//GEN-LAST:event_loginButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -100,4 +113,8 @@ public class login_screen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton loginButton;
     // End of variables declaration//GEN-END:variables
+
+    private void loginButtonAction(String text, String text1) {
+        controller.login(text,text1);
+    }
 }

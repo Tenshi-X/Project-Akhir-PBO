@@ -27,16 +27,26 @@ public class home_screen extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        loginButtonHome = new javax.swing.JButton();
+        registerButtonHome = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Pemesanan Tiket Bioskop");
 
-        jButton1.setText("Login");
+        loginButtonHome.setText("Login");
+        loginButtonHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonHomeActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Register");
+        registerButtonHome.setText("Register");
+        registerButtonHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonHomeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -45,8 +55,8 @@ public class home_screen extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(154, 154, 154)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(registerButtonHome, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loginButtonHome, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(161, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -59,22 +69,31 @@ public class home_screen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(87, 87, 87)
-                .addComponent(jButton1)
+                .addComponent(loginButtonHome)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(registerButtonHome)
                 .addContainerGap(127, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loginButtonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonHomeActionPerformed
+        new login_screen().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_loginButtonHomeActionPerformed
+
+    private void registerButtonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonHomeActionPerformed
+        new register_screen().setVisible(true);
+    }//GEN-LAST:event_registerButtonHomeActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton loginButtonHome;
+    private javax.swing.JButton registerButtonHome;
     // End of variables declaration//GEN-END:variables
 }
