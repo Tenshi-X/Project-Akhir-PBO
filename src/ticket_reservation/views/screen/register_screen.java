@@ -3,12 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ticket_reservation.views.screen;
+import ticket_reservation.controllers.sign_up_controller;
+import ticket_reservation.models.user;
 
 /**
  *
  * @author Lenovo
  */
 public class register_screen extends javax.swing.JFrame {
+    user model = new user();
+    sign_up_controller signUp = new sign_up_controller(model,this);
 
     /**
      * Creates new form register_screen
@@ -16,7 +20,6 @@ public class register_screen extends javax.swing.JFrame {
     public register_screen() {
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,6 +53,11 @@ public class register_screen extends javax.swing.JFrame {
         jLabel5.setText("Nomor HP :");
 
         registerButton.setText("Register");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,40 +117,14 @@ public class register_screen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        // TODO add your handling code here:
+        registerButtonAction(inputUsernameRegister.getText(),inputPasswordRegister.getText(),inputNamaRegister.getText(), Integer.parseInt(inputNohpRegister.getText()));
+    }//GEN-LAST:event_registerButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(register_screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(register_screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(register_screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(register_screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new register_screen().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Register;
@@ -156,4 +138,8 @@ public class register_screen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JButton registerButton;
     // End of variables declaration//GEN-END:variables
+
+    private void registerButtonAction(String text, String text2, String text3, int number) {
+        signUp.register(text, text2, text3, number);
+    }
 }

@@ -8,6 +8,7 @@ import ticket_reservation.views.screen.home_screen;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ticket_reservation.views.screen.register_screen;
 
 /**
  *
@@ -24,6 +25,6 @@ public class Main {
         } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        new home_screen().setVisible(true);
+        new register_screen().setVisible(true);
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2023 at 01:21 PM
+-- Generation Time: May 18, 2023 at 07:25 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -31,6 +31,15 @@ CREATE TABLE `bioskop` (
   `id` int(11) NOT NULL,
   `nama` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bioskop`
+--
+
+INSERT INTO `bioskop` (`id`, `nama`) VALUES
+(1, 'XXI'),
+(2, 'CGV'),
+(3, 'Cinepolis');
 
 -- --------------------------------------------------------
 
@@ -74,6 +83,14 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `nama`, `no_hp`) VALUES
+(1, 'seva', 'seva', 'seva', '111'),
+(2, 'haikal', 'haikal', 'haikal', '2222');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -112,7 +129,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `bioskop`
 --
 ALTER TABLE `bioskop`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `film`
@@ -130,7 +147,7 @@ ALTER TABLE `tiket_order`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

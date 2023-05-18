@@ -25,16 +25,16 @@ public class user {
         this.noHp = noHp;
     }
     
-    public String GetUsername(String username){
+    public String GetUsername(){
         return username;
     }
-    public String GetPassword(String password){
+    public String GetPassword(){
         return password;
     }
-    public String GetNama(String nama){
+    public String GetNama(){
         return nama;
     }
-    public int GetNoHp(int noHp){
+    public int GetNoHp(){
         return noHp;
     }
     
