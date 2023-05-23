@@ -8,13 +8,13 @@ import ticket_reservation.views.screen.home_screen;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ticket_reservation.models.user;
 
 /**
  *
  * @author Lenovo
  */
 public class Main {
-
     /**
      * @param args the command line arguments
      */

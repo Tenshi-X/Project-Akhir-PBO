@@ -176,7 +176,7 @@ public class login_screen extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
+        backButtonAction();
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**
@@ -198,5 +198,10 @@ public class login_screen extends javax.swing.JFrame {
 
     private void loginButtonAction(String text, String text1) {
         controller.login(text,text1);
+    }
+
+    private void backButtonAction() {
+        new home_screen().setVisible(true);
+        this.dispose();// Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

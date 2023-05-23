@@ -6,27 +6,35 @@ package ticket_reservation.views.screen;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import ticket_reservation.models.user;
 
 /**
  *
  * @author iramamas
  */
-public class book_screen extends javax.swing.JFrame {
+public class edit_screen extends javax.swing.JFrame {
 
     Connection con;
     PreparedStatement pst;
     private final String url = "jdbc:mysql://localhost:3306/tiket_reservation?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private final String username = "root";
     private final String pass = "";
+    
+    String id;
     int id_user;
-
-
-    public book_screen(int id) {
+    public edit_screen(String id, int id_user) {
+        this.id = id;
+        this.id_user = id_user;
         initComponents();
-        this.id_user = id;
+        
     }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,19 +61,16 @@ public class book_screen extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         confirm = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         titleRs = new javax.swing.JLabel();
         adultRs = new javax.swing.JLabel();
-        childRs = new javax.swing.JLabel();
         datetimeRs = new javax.swing.JLabel();
         priceRs = new javax.swing.JLabel();
         totalRs = new javax.swing.JLabel();
@@ -78,18 +83,22 @@ public class book_screen extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         adultqty = new javax.swing.JSpinner();
-        childqty = new javax.swing.JSpinner();
         jLabel25 = new javax.swing.JLabel();
         seat = new javax.swing.JComboBox<>();
         date_chooser = new com.toedter.calendar.JDateChooser();
-        purchase = new javax.swing.JButton();
+        edit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Ticket Booking");
+        jLabel1.setText("Edit Ticket");
 
         home.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         home.setText("H");
@@ -106,9 +115,9 @@ public class book_screen extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
+                .addGap(78, 78, 78)
                 .addComponent(jLabel1)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,9 +168,7 @@ public class book_screen extends javax.swing.JFrame {
 
         jSeparator2.setForeground(new java.awt.Color(51, 0, 51));
 
-        jLabel8.setText("Adult : ");
-
-        jLabel9.setText("Child :");
+        jLabel8.setText("Quantity : ");
 
         confirm.setBackground(new java.awt.Color(0, 153, 51));
         confirm.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -178,8 +185,6 @@ public class book_screen extends javax.swing.JFrame {
         jLabel10.setText("Movie Name :");
 
         jLabel11.setText("Adult Ticket(s) :");
-
-        jLabel12.setText("Child Ticket(s) :");
 
         jLabel13.setText("Date & Showtime :");
 
@@ -210,16 +215,11 @@ public class book_screen extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12))
+                            .addComponent(jLabel11))
                         .addGap(33, 33, 33)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(childRs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(adultRs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(titleRs)
-                                .addContainerGap())))
+                            .addComponent(adultRs)
+                            .addComponent(titleRs)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
@@ -250,11 +250,7 @@ public class book_screen extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(adultRs))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(childRs))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(datetimeRs))
@@ -299,13 +295,13 @@ public class book_screen extends javax.swing.JFrame {
             }
         });
 
-        purchase.setBackground(new java.awt.Color(0, 0, 153));
-        purchase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        purchase.setForeground(new java.awt.Color(255, 255, 255));
-        purchase.setText("PURCHASE");
-        purchase.addActionListener(new java.awt.event.ActionListener() {
+        edit.setBackground(new java.awt.Color(0, 0, 153));
+        edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        edit.setForeground(new java.awt.Color(255, 255, 255));
+        edit.setText("EDIT");
+        edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                purchaseActionPerformed(evt);
+                editActionPerformed(evt);
             }
         });
 
@@ -320,54 +316,52 @@ public class book_screen extends javax.swing.JFrame {
                         .addComponent(jLabel22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator4)
-                        .addGap(64, 64, 64))
+                        .addGap(202, 202, 202))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(adultqty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(childqty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55))
+                        .addGap(270, 270, 270))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel25)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(seat, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(movietitle, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(date_chooser, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                                    .addComponent(time, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(119, 119, 119)))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jSeparator2)))
+                        .addGap(193, 193, 193))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(confirm)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(purchase)))
-                .addGap(138, 138, 138))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addComponent(jLabel2)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(movietitle, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(date_chooser, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                            .addComponent(time, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(119, 119, 119)))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel7)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jSeparator2)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(confirm)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(139, 139, 139)
                 .addComponent(bioskop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -408,9 +402,7 @@ public class book_screen extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
-                        .addComponent(jLabel9)
-                        .addComponent(adultqty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(childqty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(adultqty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -426,7 +418,7 @@ public class book_screen extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(purchase, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15))
         );
 
@@ -435,7 +427,7 @@ public class book_screen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -449,34 +441,21 @@ public class book_screen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-        bioskop.setSelectedIndex(0);
-        movietitle.setSelectedIndex(-1);
-        date_chooser.setDate(null);
-        time.setSelectedIndex(-1);
-        adultqty.setValue(0);
-        childqty.setValue(0);
-        seat.setSelectedIndex(-1);
-        titleRs.setText("");
-        adultRs.setText("");
-        childRs.setText("");
-        datetimeRs.setText("");
-        seatRs.setText("");
-        priceRs.setText("");
-        totalRs.setText("");
-        bioskopRs.setText("");
+        ticket_screen tk = new ticket_screen(id_user);
+        tk.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_cancelActionPerformed
 
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
         new dashboard_screen(id_user).setVisible(true);
-        this.dispose();
+        dispose();
     }//GEN-LAST:event_homeActionPerformed
 
     private void bioskopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bioskopActionPerformed
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = (Connection) DriverManager.getConnection(url, username, pass);
-            
             if (bioskop.getSelectedItem().equals("XXI")) {
                 String query = "Select judul from film where id_bioskop = '1'";
                 pst = con.prepareStatement(query);
@@ -532,7 +511,6 @@ public class book_screen extends javax.swing.JFrame {
             String date = sdf.format(date_chooser.getDate());
             String times = (String) time.getSelectedItem();
             int adultQty = (int) adultqty.getValue();
-            int childQty = (int) childqty.getValue();
             String seats = (String) seat.getSelectedItem();
 
             switch (seats) {
@@ -561,7 +539,6 @@ public class book_screen extends javax.swing.JFrame {
             bioskopRs.setText(studio);
             titleRs.setText(title);
             adultRs.setText(Integer.toString(adultQty));
-            childRs.setText(Integer.toString(childQty));
             datetimeRs.setText(date + ',' + times);
             seatRs.setText(seats);
         } catch (Exception e) {
@@ -573,9 +550,9 @@ public class book_screen extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_timeActionPerformed
 
-    private void purchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purchaseActionPerformed
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = (Connection) DriverManager.getConnection(url, username, pass);
             int id_studio = 0, id_film = 0;
             String studio = (String) bioskop.getSelectedItem();
@@ -584,8 +561,7 @@ public class book_screen extends javax.swing.JFrame {
             String date = sdf.format(date_chooser.getDate());
             String times = (String) time.getSelectedItem();
             int adultQty = (int) adultqty.getValue();
-            int childQty = (int) childqty.getValue();
-            int jumlah = adultQty + childQty;
+            int jumlah = adultQty;
             String seats = (String) seat.getSelectedItem();
 
             int price, total = 0;
@@ -622,28 +598,75 @@ public class book_screen extends javax.swing.JFrame {
                 id_film = rs.getInt("id");
             }
 
-            query = "INSERT into tiket_order(id_film,id_user,id_bioskop,jumlah_tiket,tanggal,waktu,total_harga) Values(?,?,?,?,?,?,?)";
+            query = "UPDATE `tiket_order` SET `id_order`='"+ id +"',`id_film`='"+id_film+"',`id_user`='"+id_user+"',`id_bioskop`='"+id_studio+"',`jumlah_tiket`='"+jumlah+"',`tanggal`='"+date+"',`waktu`='"+times+"',`total_harga`='"+total+"' WHERE id_order='"+id+"'";
             pst = con.prepareStatement(query);
-            pst.setInt(1, id_film);
-            pst.setInt(2, id_user);
-            pst.setInt(3, id_studio);
-            pst.setInt(4, jumlah);
-            pst.setString(5, date);
-            pst.setString(6, times);
-            pst.setInt(7, total);
+           
             pst.execute();
+
             JOptionPane.showMessageDialog(null, "Data Berhasil ditambahkan");
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
             JOptionPane.showMessageDialog(null, "Koneksi Gagal!");
             System.exit(0);
         }
-    }//GEN-LAST:event_purchaseActionPerformed
+    }//GEN-LAST:event_editActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            String studioName1 = null, time1 = null, seat1 = null, title1 = null;
+            int qty1 = 0, total1 = 0, price1 = 0;
+            Date date1 = null;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = (Connection) DriverManager.getConnection(url, username, pass);
+            String query = "SELECT b.nama, t.jumlah_tiket, t.tanggal, t.waktu, t.total_harga, f.judul FROM tiket_order AS t JOIN bioskop AS b JOIN film AS f ON b.id = t.id_bioskop AND f.id = t.id_film WHERE `id_order` ="+id+"";
+            pst = con.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                studioName1 = rs.getString("nama");
+                qty1 = rs.getInt("jumlah_tiket");
+                date1 = rs.getDate("tanggal");
+                time1 = rs.getString("waktu");
+                total1 = rs.getInt("total_harga");
+                title1 = rs.getString("judul");
+            }
+
+            price1 = total1 / qty1;
+            switch (price1) {
+                case 30000:
+                    seat1 = "Reguler";
+                    break;
+                case 50000:
+                    seat1 = "VIP";
+                    break;
+                case 100000:
+                    seat1 = "Private VIP";
+                    break;
+                default:
+                    break;
+            }
+            
+                
+            bioskop.addItem(studioName1);
+            movietitle.addItem(title1);
+            date_chooser.setDate(date1);
+            time.addItem(time1);
+            adultqty.setValue(qty1);
+            seat.addItem(seat1);
+            
+            
+
+            con.close();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ticket_screen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ticket_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel adultRs;
@@ -651,16 +674,14 @@ public class book_screen extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> bioskop;
     private javax.swing.JLabel bioskopRs;
     private javax.swing.JButton cancel;
-    private javax.swing.JLabel childRs;
-    private javax.swing.JSpinner childqty;
     private javax.swing.JButton confirm;
     private com.toedter.calendar.JDateChooser date_chooser;
     private javax.swing.JLabel datetimeRs;
+    private javax.swing.JButton edit;
     private javax.swing.JButton home;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -675,7 +696,6 @@ public class book_screen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -686,11 +706,14 @@ public class book_screen extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JComboBox<String> movietitle;
     private javax.swing.JLabel priceRs;
-    private javax.swing.JButton purchase;
     private javax.swing.JComboBox<String> seat;
     private javax.swing.JLabel seatRs;
     private javax.swing.JComboBox<String> time;
     private javax.swing.JLabel titleRs;
     private javax.swing.JLabel totalRs;
     // End of variables declaration//GEN-END:variables
+
+    private JComboBox<String> setText(String title1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -8,6 +8,7 @@ import ticket_reservation.models.user;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import ticket_reservation.views.screen.register_screen;
 /**
  *
@@ -38,9 +39,11 @@ public class sign_up_controller {
             preparedStmt.setString (4, model.GetNama());
             preparedStmt.setInt    (5, model.GetNoHp());
             preparedStmt.execute();
-            connection.close();
-            view.dispose();
+                JOptionPane.showMessageDialog(null, "Data berhasil ditambahkan", "Register Success", 2);
+                connection.close();
+                view.dispose();
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Data gagal ditambahkan", "Register Failed", 2);
             Logger.getLogger(sign_up_controller.class.getName()).log(Level.SEVERE, null, ex);
         }         
     }

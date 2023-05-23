@@ -9,22 +9,29 @@ package ticket_reservation.models;
  * @author Lenovo
  */
 public class user {
+    private int id;
     private String username;
     private String password;
     private String nama;
     private int noHp;
     
-    public void setUsername(String username){
-        this.username = username;
+    public void setId(int idUser){
+        this.id = idUser;
     }
-    public void setPassword(String password){
-        this.password = password;
-    }public void setNama(String nama){
-        this.nama = nama;
-    }public void setnoHp(int noHp){
-        this.noHp = noHp;
+    public void setUsername(String usernameUser){
+        this.username = usernameUser;
+    }
+    public void setPassword(String passwordUser){
+        this.password = passwordUser;
+    }public void setNama(String namaUser){
+        this.nama = namaUser;
+    }public void setnoHp(int noHpUser){
+        this.noHp = noHpUser;
     }
     
+    public int GetId(){
+        return id;
+    }
     public String GetUsername(){
         return username;
     }

@@ -40,7 +40,7 @@ public class register_screen extends javax.swing.JFrame {
         inputNohpRegister = new javax.swing.JTextField();
         inputPasswordRegister = new javax.swing.JPasswordField();
         registerButton = new javax.swing.JButton();
-        registerButton1 = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -73,12 +73,12 @@ public class register_screen extends javax.swing.JFrame {
             }
         });
 
-        registerButton1.setBackground(new java.awt.Color(255, 153, 153));
-        registerButton1.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
-        registerButton1.setText("Back");
-        registerButton1.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setBackground(new java.awt.Color(255, 153, 153));
+        backButton.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerButton1ActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -105,7 +105,7 @@ public class register_screen extends javax.swing.JFrame {
                         .addGap(11, 11, 11)
                         .addComponent(registerButton)
                         .addGap(18, 18, 18)
-                        .addComponent(registerButton1)
+                        .addComponent(backButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -134,7 +134,7 @@ public class register_screen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registerButton)
-                    .addComponent(registerButton1))
+                    .addComponent(backButton))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -197,15 +197,17 @@ public class register_screen extends javax.swing.JFrame {
         registerButtonAction(inputUsernameRegister.getText(),inputPasswordRegister.getText(),inputNamaRegister.getText(), Integer.parseInt(inputNohpRegister.getText()));
     }//GEN-LAST:event_registerButtonActionPerformed
 
-    private void registerButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButton1ActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_registerButton1ActionPerformed
+        backButtonAction();
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backButton;
     private javax.swing.JTextField inputNamaRegister;
     private javax.swing.JTextField inputNohpRegister;
     private javax.swing.JPasswordField inputPasswordRegister;
@@ -219,10 +221,15 @@ public class register_screen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JButton registerButton;
-    private javax.swing.JButton registerButton1;
     // End of variables declaration//GEN-END:variables
 
     private void registerButtonAction(String text, String text2, String text3, int number) {
         signUp.register(text, text2, text3, number);
+    }
+
+    private void backButtonAction() {
+        new home_screen().setVisible(true);
+        this.dispose();
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

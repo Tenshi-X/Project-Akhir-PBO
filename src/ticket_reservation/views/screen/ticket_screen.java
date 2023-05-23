@@ -10,6 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import ticket_reservation.models.user;
+import ticket_reservation.views.screen.dashboard_screen;
 
 public class ticket_screen extends javax.swing.JFrame {
 
@@ -19,9 +21,12 @@ public class ticket_screen extends javax.swing.JFrame {
     private final String url = "jdbc:mysql://localhost:3306/tiket_reservation?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private final String username = "root";
     private final String pass = "";
+    int id_user;
+   
 
-    public ticket_screen() {
+    public ticket_screen(int id_user) {
         initComponents();
+        this.id_user = id_user;
     }
 
     /**
@@ -38,6 +43,7 @@ public class ticket_screen extends javax.swing.JFrame {
         table = new javax.swing.JTable();
         select = new javax.swing.JButton();
         show = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -106,13 +112,22 @@ public class ticket_screen extends javax.swing.JFrame {
             }
         });
 
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(select)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(select)
+                    .addComponent(backButton))
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -126,7 +141,9 @@ public class ticket_screen extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
+                        .addContainerGap()
+                        .addComponent(backButton)
+                        .addGap(64, 64, 64)
                         .addComponent(select, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(show, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,15 +226,14 @@ public class ticket_screen extends javax.swing.JFrame {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(titleRs, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(timeRs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(dateRs, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(timeRs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dateRs, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -313,17 +329,16 @@ public class ticket_screen extends javax.swing.JFrame {
         try {
             String studioName = null, date = null, time = null, seat = null, title = null, genre = null, rating = null;
             int qty = 0, total = 0, price = 0;
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = (Connection) DriverManager.getConnection(url, username, pass);
 
             int row = table.getSelectedRow();
             DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
             String id = (String) tblModel.getValueAt(row, 0);
-            String query = "SELECT b.nama, t.jumlah_tiket, t.tanggal, t.waktu, t.total_harga FROM tiket_order AS t JOIN bioskop AS b ON b.id = t.id_bioskop WHERE `id_order` = ? ";
+            String query = "SELECT b.nama, t.jumlah_tiket, t.tanggal, t.waktu, t.total_harga FROM tiket_order AS t JOIN bioskop AS b ON b.id = t.id_bioskop WHERE `id_user` = '" + id_user + "'";
             pst = con.prepareStatement(query);
-            pst.setString(1, id);
             ResultSet rs = pst.executeQuery();
-
+            
             while (rs.next()) {
                 studioName = rs.getString("nama");
                 qty = rs.getInt("jumlah_tiket");
@@ -347,9 +362,8 @@ public class ticket_screen extends javax.swing.JFrame {
                     break;
             }
 
-            query = "SELECT f.judul, f.genre, f.ratings FROM tiket_order AS t JOIN film AS f ON f.id = t.id_film WHERE `id_order` = ? ";
+            query = "SELECT f.judul, f.genre, f.ratings FROM tiket_order AS t JOIN film AS f ON f.id = t.id_film WHERE `id_user` = '" + id_user + "'";
             pst2 = con.prepareStatement(query);
-            pst2.setString(1, id);
             ResultSet rs2 = pst2.executeQuery();
 
             while (rs2.next()) {
@@ -380,7 +394,7 @@ public class ticket_screen extends javax.swing.JFrame {
 
     private void RefundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefundActionPerformed
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = (Connection) DriverManager.getConnection(url, username, pass);
 
             int row = table.getSelectedRow();
@@ -412,12 +426,17 @@ public class ticket_screen extends javax.swing.JFrame {
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = (Connection) DriverManager.getConnection(url, username, pass);
             
             int row = table.getSelectedRow();
             DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
             String id = (String) tblModel.getValueAt(row, 0);
+            
+            edit_screen et = new edit_screen(id, id_user);
+            et.setVisible(true);
+            this.dispose();
+            
             
             
         } catch (ClassNotFoundException ex) {
@@ -429,9 +448,9 @@ public class ticket_screen extends javax.swing.JFrame {
 
     private void showActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showActionPerformed
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = (Connection) DriverManager.getConnection(url, username, pass);
-            String query = "SELECT t.id_order, f.judul, f.genre, f.ratings, f.poster FROM tiket_order AS t JOIN film AS f ON f.id = t.id_film ";
+            String query = "SELECT t.id_order, f.judul, f.genre, f.ratings, f.poster FROM tiket_order AS t JOIN film AS f ON f.id = t.id_film  WHERE `id_user` = '" + id_user + "'";
             pst = con.prepareStatement(query);
             ResultSet rs = pst.executeQuery();
 
@@ -456,43 +475,17 @@ public class ticket_screen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_showActionPerformed
 
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        backButtonAction();
+    }//GEN-LAST:event_backButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ticket_screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ticket_screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ticket_screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ticket_screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ticket_screen().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Refund;
+    private javax.swing.JButton backButton;
     private javax.swing.JLabel dateRs;
     private javax.swing.JButton edit;
     private javax.swing.JLabel genreRs;
@@ -524,4 +517,9 @@ public class ticket_screen extends javax.swing.JFrame {
     private javax.swing.JLabel titleRs;
     private javax.swing.JLabel totalRs;
     // End of variables declaration//GEN-END:variables
+
+    private void backButtonAction() {
+       new dashboard_screen(id_user).setVisible(true);
+       this.dispose();
+    }
 }

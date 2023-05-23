@@ -4,12 +4,10 @@
  */
 package ticket_reservation.controllers;
 
-
-
 /**
  *
  * @author Lenovo
  */
-public class app_controller {
+public class book_controller {
     
 }
