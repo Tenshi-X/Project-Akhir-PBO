@@ -20,7 +20,7 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ticket_reservation", "root", "");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tiket_reservation", "root", "");
         } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }

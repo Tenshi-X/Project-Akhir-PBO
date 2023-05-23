@@ -29,7 +29,7 @@ public class sign_up_controller {
         model.setnoHp( number);
         
         try{
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ticket_reservation", "root", "");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tiket_reservation", "root", "");
         String sql = " insert into user(id, username, password, nama, no_hp)" + " values (?, ?, ?, ?, ?)";
             PreparedStatement preparedStmt = connection.prepareStatement(sql);
             preparedStmt.setInt (1, 0);

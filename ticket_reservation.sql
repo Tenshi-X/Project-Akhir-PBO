@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2023 at 07:25 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.10
+-- Generation Time: May 23, 2023 at 12:40 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ticket_reservation`
+-- Database: `tiket_reservation`
 --
 
 -- --------------------------------------------------------
@@ -49,9 +49,30 @@ INSERT INTO `bioskop` (`id`, `nama`) VALUES
 
 CREATE TABLE `film` (
   `id` int(11) NOT NULL,
-  `nama` varchar(20) NOT NULL,
+  `id_bioskop` int(11) NOT NULL,
+  `judul` varchar(30) NOT NULL,
+  `genre` varchar(30) NOT NULL,
+  `ratings` varchar(30) NOT NULL,
   `poster` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `film`
+--
+
+INSERT INTO `film` (`id`, `id_bioskop`, `judul`, `genre`, `ratings`, `poster`) VALUES
+(1, 1, 'BLACK PANTHER: WAKANDA FOREVER', 'Action . Adventure . Drama', '7.4/10', 'bp.jpeg'),
+(2, 1, 'SRI ASIH', 'Action . Sci-Fi', '7.5/10', 'sa.jpeg'),
+(3, 1, 'THE MENU', 'Comedy . Horror . Thriller', '7.5/10', 'tm.jpeg'),
+(4, 1, 'TEGAR', 'Drama', '7/10', 'tegar.jpeg'),
+(5, 2, 'AVENGERS: ENDGAME', 'Action . Adventure . Drama', '8.4/10', 'ae.jpg'),
+(6, 2, 'DOCTOR STRANGE IN THE MULTIVER', 'Action . Adventure . Drama', '6.9/10', 'ds.jpg'),
+(7, 2, 'SPIDER-MAN: NO WAY HOME', 'Action . Adventure . Fantasy', '8.3/10', 'sm.jpg'),
+(8, 2, 'THOR: LOVE AND THUNDER', 'Action . Adventure . Comedy', '6.3/10', 'thor.jpg'),
+(9, 3, 'JURASSIC WORLD DOMINION', 'Action . Adventure . Sci-Fi', '5.7/10', 'jw.jpg'),
+(10, 3, 'BULLET TRAIN', 'Action . Comedy . Thriller', '7.3/10', 'bt.jpg'),
+(11, 3, 'LOKI', 'Action . Adventure . Fantasy', '8.2/10', 'loki.jpg'),
+(12, 3, 'INTERSTELLAR', 'Adventure . Drama . Sci-Fi', '8.6/10', 'inter.jpg');
 
 -- --------------------------------------------------------
 
@@ -65,8 +86,18 @@ CREATE TABLE `tiket_order` (
   `id_user` int(11) NOT NULL,
   `id_bioskop` int(11) NOT NULL,
   `jumlah_tiket` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `waktu` varchar(30) NOT NULL,
   `total_harga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tiket_order`
+--
+
+INSERT INTO `tiket_order` (`id_order`, `id_film`, `id_user`, `id_bioskop`, `jumlah_tiket`, `tanggal`, `waktu`, `total_harga`) VALUES
+(5, 4, 1, 1, 2, '2023-05-25', '2:00 PM', 200000),
+(6, 5, 1, 2, 3, '2023-05-24', '11:00 AM', 200000);
 
 -- --------------------------------------------------------
 
@@ -104,7 +135,8 @@ ALTER TABLE `bioskop`
 -- Indexes for table `film`
 --
 ALTER TABLE `film`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_bioskop` (`id_bioskop`);
 
 --
 -- Indexes for table `tiket_order`
@@ -135,13 +167,13 @@ ALTER TABLE `bioskop`
 -- AUTO_INCREMENT for table `film`
 --
 ALTER TABLE `film`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tiket_order`
 --
 ALTER TABLE `tiket_order`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -152,6 +184,12 @@ ALTER TABLE `user`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `film`
+--
+ALTER TABLE `film`
+  ADD CONSTRAINT `film_ibfk_1` FOREIGN KEY (`id_bioskop`) REFERENCES `bioskop` (`id`);
 
 --
 -- Constraints for table `tiket_order`

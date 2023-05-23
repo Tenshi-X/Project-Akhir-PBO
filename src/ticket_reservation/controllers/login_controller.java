@@ -35,7 +35,7 @@ public class login_controller {
          
             
             try{
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ticket_reservation", "root", "");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tiket_reservation", "root", "");
          String sql = "SELECT * FROM `user` WHERE `username` =? AND `password` =? ";
             prepareStatement = connection.prepareStatement(sql);
             
