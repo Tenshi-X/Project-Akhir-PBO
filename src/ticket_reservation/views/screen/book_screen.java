@@ -476,7 +476,6 @@ public class book_screen extends javax.swing.JFrame {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = (Connection) DriverManager.getConnection(url, username, pass);
-            
             if (bioskop.getSelectedItem().equals("XXI")) {
                 String query = "Select judul from film where id_bioskop = '1'";
                 pst = con.prepareStatement(query);

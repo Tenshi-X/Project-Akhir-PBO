@@ -335,7 +335,7 @@ public class ticket_screen extends javax.swing.JFrame {
             int row = table.getSelectedRow();
             DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
             String id = (String) tblModel.getValueAt(row, 0);
-            String query = "SELECT b.nama, t.jumlah_tiket, t.tanggal, t.waktu, t.total_harga FROM tiket_order AS t JOIN bioskop AS b ON b.id = t.id_bioskop WHERE `id_user` = '" + id_user + "'";
+            String query = "SELECT b.nama, t.jumlah_tiket, t.tanggal, t.waktu, t.total_harga FROM tiket_order AS t JOIN bioskop AS b ON b.id = t.id_bioskop WHERE `id_user` = '" + id_user + "'" + "AND `id_order` = '" + id + "'";
             pst = con.prepareStatement(query);
             ResultSet rs = pst.executeQuery();
             
@@ -362,7 +362,7 @@ public class ticket_screen extends javax.swing.JFrame {
                     break;
             }
 
-            query = "SELECT f.judul, f.genre, f.ratings FROM tiket_order AS t JOIN film AS f ON f.id = t.id_film WHERE `id_user` = '" + id_user + "'";
+            query = "SELECT f.judul, f.genre, f.ratings FROM tiket_order AS t JOIN film AS f ON f.id = t.id_film WHERE `id_user` = '" + id_user + "'" + "AND `id_order` = '" + id + "'";
             pst2 = con.prepareStatement(query);
             ResultSet rs2 = pst2.executeQuery();
 
