@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2023 at 12:40 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.1
+-- Generation Time: May 24, 2023 at 05:02 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -96,8 +96,16 @@ CREATE TABLE `tiket_order` (
 --
 
 INSERT INTO `tiket_order` (`id_order`, `id_film`, `id_user`, `id_bioskop`, `jumlah_tiket`, `tanggal`, `waktu`, `total_harga`) VALUES
-(5, 4, 1, 1, 2, '2023-05-25', '2:00 PM', 200000),
-(6, 5, 1, 2, 3, '2023-05-24', '11:00 AM', 200000);
+(5, 6, 1, 2, 3, '2023-05-11', '2:00 PM', 150000),
+(6, 5, 1, 2, 3, '2023-05-24', '11:00 AM', 200000),
+(10, 6, 2, 2, 3, '2023-05-26', '3:00 PM', 90000),
+(12, 9, 1, 3, 3, '2023-05-26', '3:00 PM', 300000),
+(13, 9, 1, 3, 3, '2023-05-26', '1:00 PM', 90000),
+(14, 9, 1, 3, 3, '2023-05-26', '2:00 PM', 90000),
+(15, 7, 1, 2, 4, '2023-05-26', '2:00 PM', 200000),
+(16, 5, 2, 2, 4, '2023-05-26', '2:00 PM', 200000),
+(17, 10, 6, 3, 3, '2023-05-27', '3:00 PM', 300000),
+(19, 3, 10, 1, 4, '2023-05-27', '3:00 PM', 200000);
 
 -- --------------------------------------------------------
 
@@ -119,7 +127,15 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `password`, `nama`, `no_hp`) VALUES
 (1, 'seva', 'seva', 'seva', '111'),
-(2, 'haikal', 'haikal', 'haikal', '2222');
+(2, 'haikal', 'haikal', 'haikal', '2222'),
+(3, 'coba', 'coba', 'coba', '11111'),
+(4, 'ibnu', 'ibnu', 'ibnu', '4444'),
+(5, 'asd', 'sad', 'asd', '234'),
+(6, 'farel', 'farel', 'farel', '6666'),
+(7, 'sev', 'sev', 'sev', '555'),
+(8, 'far', 'far', 'far', '333'),
+(9, 'coba1', 'coba1', 'coba1', '555'),
+(10, 'gian', 'gian', 'gian', '9988');
 
 --
 -- Indexes for dumped tables
@@ -173,13 +189,13 @@ ALTER TABLE `film`
 -- AUTO_INCREMENT for table `tiket_order`
 --
 ALTER TABLE `tiket_order`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
